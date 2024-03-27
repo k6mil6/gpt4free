@@ -4,7 +4,7 @@ from http_server import handle_prompt
 
 def main():
     app = web.Application()
-    app.add_routes([web.post('/prompt', handle_prompt)])  # Изменяем маршрут на обработку POST-запросов
+    app.add_routes([web.post('/prompt', handle_prompt)])
 
     web.run_app(app, port=8888)
 
