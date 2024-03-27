@@ -1,11 +1,13 @@
-FROM python:3.8-slim
+FROM python:3.9-slim
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY requirements.txt ./
 
-RUN pip install --no-cache-dir aiohttp g4f
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ .
 
 EXPOSE 8888
 
-CMD ["python", "./main.py"]
+CMD ["uvicorn", "main:app", "--port", "8888"]

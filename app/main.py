@@ -1,13 +1,15 @@
-from aiohttp import web
-from http_server import handle_prompt
+from fastapi import FastAPI
+from pydantic import BaseModel
+from chat_gpt import generate_answer
+
+app = FastAPI()
 
 
-def main():
-    app = web.Application()
-    app.add_routes([web.post('/prompt', handle_prompt)])
-
-    web.run_app(app, port=8888)
+class Prompt(BaseModel):
+    prompt: str
 
 
-if __name__ == '__main__':
-    main()
+@app.post("/prompt")
+async def handle_prompt(prompt: Prompt):
+    response = await generate_answer(prompt.prompt)
+    return response
